@@ -7,11 +7,19 @@
 
 import SwiftUI
 
+
 @main
 struct MacNewsApp: App {
+    @AppStorage("isFirstOpen") var isFirstOpen : Bool = true
     var body: some Scene {
         WindowGroup {
-            ContentView()
+            MNArticlesSwiftUIView().sheet(isPresented: $isFirstOpen, content: {
+                MNOnboardingViewSwiftUIView(isFirstOpen: $isFirstOpen)
+            })
+            
         }
     }
 }
+
+
+
