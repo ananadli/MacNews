@@ -28,7 +28,7 @@ struct MNArticleResponse : Codable {
     }
 }
 
-struct MNArticleModel : Codable,Identifiable {
+struct MNArticleModel : Codable,Identifiable,Hashable {
     
     let id = UUID()
     let idPath: String
@@ -62,6 +62,13 @@ struct MNArticleModel : Codable,Identifiable {
         
         self.category = try container.decode(String.self, forKey: .category)
         self.thumbnail = try container.decode(String.self, forKey: .thumbnail)
+    }
+    
+    
+    func getRelativePubDateFormat() -> String {
+        let formatter = RelativeDateTimeFormatter()
+        formatter.unitsStyle = .full
+        return formatter.localizedString(for: self.pubDate, relativeTo: Date())
     }
     
 }
