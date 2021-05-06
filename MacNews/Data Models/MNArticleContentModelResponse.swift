@@ -1,55 +1,36 @@
 //
-//  MNArticleModel.swift
+//  MNArticleContentModel.swift
 //  MacNews
 //
 //  Created by Anan Suliman on 02/05/2021.
 //
 
 import Foundation
-import Combine
 
+//The data model response for getArticleContent(article:) endpoint 
 
-//The network request response for getAllArticles endpoint
-struct MNArticleResponse : Codable {
+struct MNArticleContentModelResponse :Codable {
     
-    var articles : [MNArticleModel]
-    
-    
-    enum CodingKeys: String, CodingKey {
-       case articles = "hydra:member"
-     }
-    
-    init(from decoder: Decoder) throws {
-
-        let container = try decoder.container(keyedBy: CodingKeys.self)
-        
-        self.articles = try container.decode([MNArticleModel].self, forKey: .articles)
-        
-    }
-}
-
-struct MNArticleModel : Codable,Identifiable,Hashable {
-    
+    let hypertTextContent: String
+    let author : String
     let id = UUID()
     let idPath: String
     let title : String
     let pubDate : Date
     let category : String
     let thumbnail : String
+    let context : String
     
-    init(idPath : String,title : String , pubDate : Date , category:String,thumbnail:String) {
-        self.idPath = idPath
-        self.title = title
-        self.pubDate = pubDate
-        self.category = category
-        self.thumbnail = thumbnail
-    }
+    
     enum CodingKeys: String, CodingKey {
+       case hypertTextContent = "content"
+       case author
         case idPath = "@id"
         case title
         case pubDate
         case category
         case thumbnail
+        case context = "@context"
      }
     
     init(from decoder: Decoder) throws {
@@ -68,16 +49,12 @@ struct MNArticleModel : Codable,Identifiable,Hashable {
         
         self.category = try container.decode(String.self, forKey: .category)
         self.thumbnail = try container.decode(String.self, forKey: .thumbnail)
+        self.context = try container.decode(String.self, forKey: .context)
+        self.hypertTextContent = try container.decode(String.self, forKey: .hypertTextContent)
+        self.author = try container.decode(String.self, forKey: .author)
+
+
+
     }
-    
-    
-    func getRelativePubDateFormat() -> String {
-        let formatter = RelativeDateTimeFormatter()
-        formatter.unitsStyle = .full
-        return formatter.localizedString(for: self.pubDate, relativeTo: Date())
-    }
-    
+ 
 }
-
-
-
