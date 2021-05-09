@@ -9,43 +9,50 @@ import SwiftUI
 import SDWebImageSwiftUI
 struct MNArticlesSwiftUIView: View {
     @ObservedObject var viewModel = MNArticleViewModel()
-
+    @AppStorage(UserDefaultsKeys.BookmarkedArticles.rawValue) var bookmarkList : [String] = []
+    @State var showBookmarked : Bool = false
     var body: some View {
       
             NavigationView {
                
             ZStack {
                 Color("background-color").ignoresSafeArea()
-
-                LazyVStack(alignment: .leading, spacing: 0, content: {
-                        ScrollView(.vertical, showsIndicators: true, content: {
+               
+                 
+                VStack(alignment: .center, spacing: 0, content: {
+                    
+                
+                    MNArticleListNavigationView(showBookmarked: $showBookmarked, viewModel: viewModel)
+                    
+                    LazyVStack(alignment: .leading, spacing: 0, content: {
+                                ScrollView(.vertical, showsIndicators: true, content: {
+                                    
                             
-                    
-                        ForEach(viewModel.articles, id: \.self) { item in
-                        
-                            MNArticleListItemView(article: item)
+                                    ForEach(viewModel.articles, id: \.id) { item in
+                                        if showBookmarked == true   {
+                                            if bookmarkList.contains(item.idPath) {
+                                                
+                                    MNArticleListItemView(article: item)
+                                            }
+                                        }else{
+                                            MNArticleListItemView(article: item)
+                                        }
+                                }
+
+                            })
+
+                    }).navigationBarTitle("Articles").onAppear(perform: {
+                                
+
+                        if viewModel.articles.count == 0 {
+                                viewModel.getAllArticles()
                         }
-                    })
-                    }).navigationBarTitle("Articles").ignoresSafeArea(.all, edges: .all).onAppear(perform: {
-                        
-                        
-                        viewModel.getAllArticles()
+                        })
+                    Spacer()
+
                 })
-            }.navigationBarItems(trailing:
-            
-            
-            
-                Button(action: {
-                    
-                    viewModel.getAllArticles()
-                }, label: {
-                    if viewModel.isLoading{
-                        ProgressView()
-                    }else{
-                    Image(systemName: "arrow.clockwise")
-                    }
-                })
-            )
+                
+            }.navigationBarHidden(true)
                 
             }
         
@@ -56,14 +63,14 @@ struct MNArticlesSwiftUIView: View {
 
 struct MNArticlesSwiftUIView_Previews: PreviewProvider {
     static var previews: some View {
-        MNArticlesSwiftUIView()
+        MNArticlesSwiftUIView( )
     }
 }
 
 struct MNArticleListItemView: View {
     
     var article : MNArticleModel
-    
+
     var body: some View {
         NavigationLink(
             destination: MNArticleDetailsSwiftUIView(viewModel: MNArticleDetailsViewModel(article: article)),
@@ -100,5 +107,49 @@ struct MNArticleRelativeDateView: View {
             
             Text( article.getRelativePubDateFormat()).foregroundColor(Color("subtitle-color")).font(.subheadline)
         })
+    }
+}
+
+struct MNArticleListNavigationView: View {
+    @Binding var showBookmarked : Bool
+    @ObservedObject var viewModel : MNArticleViewModel
+
+    var body: some View {
+        VStack(alignment: .center, spacing: nil, content: {
+            HStack {
+                
+                Spacer()
+                
+                Button(action: {
+                    
+                    viewModel.getAllArticles()
+                }, label: {
+                    ZStack{
+                    if viewModel.isLoading{
+                        ProgressView().foregroundColor(.black)
+                    }else{
+                        Image(systemName: "arrow.clockwise") .foregroundColor(.black).font(.system(size: 25, weight: .medium, design: .default))
+                        
+                    }
+                    }
+                })
+                Button(action: {
+                    
+                    showBookmarked.toggle()
+                }, label: {
+                    
+                    Image(systemName: showBookmarked ? "bookmark.circle.fill" : "bookmark.circle")
+                        .foregroundColor(.black).font(.system(size: 25, weight: .medium, design: .default))
+                    
+                })
+                
+                
+            }
+            HStack {
+                Text("Articles").font(.system(size: 30, weight: .bold, design: .default)).foregroundColor(.black).multilineTextAlignment(.leading)
+                Spacer()
+            }
+            
+        }).padding(EdgeInsets(top: 20, leading: 10, bottom: 0, trailing: 10))
     }
 }

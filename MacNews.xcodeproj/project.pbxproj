@@ -7,6 +7,7 @@
 	objects = {
 
 /* Begin PBXBuildFile section */
+		94C4A5BF2647DAF1005C026F /* MNGlobalExtiontions.swift in Sources */ = {isa = PBXBuildFile; fileRef = 94C4A5BE2647DAF1005C026F /* MNGlobalExtiontions.swift */; };
 		94FA47CB263CB19A0090F861 /* MacNewsApp.swift in Sources */ = {isa = PBXBuildFile; fileRef = 94FA47CA263CB19A0090F861 /* MacNewsApp.swift */; };
 		94FA47CF263CB19B0090F861 /* Assets.xcassets in Resources */ = {isa = PBXBuildFile; fileRef = 94FA47CE263CB19B0090F861 /* Assets.xcassets */; };
 		94FA47D2263CB19B0090F861 /* Preview Assets.xcassets in Resources */ = {isa = PBXBuildFile; fileRef = 94FA47D1263CB19B0090F861 /* Preview Assets.xcassets */; };
@@ -43,6 +44,7 @@
 /* End PBXContainerItemProxy section */
 
 /* Begin PBXFileReference section */
+		94C4A5BE2647DAF1005C026F /* MNGlobalExtiontions.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = MNGlobalExtiontions.swift; sourceTree = "<group>"; };
 		94FA47C7263CB19A0090F861 /* MacNews.app */ = {isa = PBXFileReference; explicitFileType = wrapper.application; includeInIndex = 0; path = MacNews.app; sourceTree = BUILT_PRODUCTS_DIR; };
 		94FA47CA263CB19A0090F861 /* MacNewsApp.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = MacNewsApp.swift; sourceTree = "<group>"; };
 		94FA47CE263CB19B0090F861 /* Assets.xcassets */ = {isa = PBXFileReference; lastKnownFileType = folder.assetcatalog; path = Assets.xcassets; sourceTree = "<group>"; };
@@ -125,6 +127,7 @@
 				94FA47D0263CB19B0090F861 /* Preview Content */,
 				94FA47F7263CB5D30090F861 /* Colors.xcassets */,
 				94FA4806264091F20090F861 /* MNMacNewsAPI.swift */,
+				94C4A5BE2647DAF1005C026F /* MNGlobalExtiontions.swift */,
 			);
 			path = MacNews;
 			sourceTree = "<group>";
@@ -326,6 +329,7 @@
 				94FA4803263EA0AE0090F861 /* MNArticleViewModel.swift in Sources */,
 				94FA47CB263CB19A0090F861 /* MacNewsApp.swift in Sources */,
 				94FA481026435E510090F861 /* MNArticleDetailsSwiftUIView.swift in Sources */,
+				94C4A5BF2647DAF1005C026F /* MNGlobalExtiontions.swift in Sources */,
 				94FA47FC263E6C540090F861 /* MNArticleResponse.swift in Sources */,
 				94FA4807264091F20090F861 /* MNMacNewsAPI.swift in Sources */,
 				94FA481226435E890090F861 /* MNArticleDetailsViewModel.swift in Sources */,
@@ -498,7 +502,7 @@
 				PRODUCT_BUNDLE_IDENTIFIER = net.ananadli.MacNews;
 				PRODUCT_NAME = "$(TARGET_NAME)";
 				SWIFT_VERSION = 5.0;
-				TARGETED_DEVICE_FAMILY = "1,2";
+				TARGETED_DEVICE_FAMILY = 1;
 			};
 			name = Debug;
 		};
@@ -520,7 +524,7 @@
 				PRODUCT_BUNDLE_IDENTIFIER = net.ananadli.MacNews;
 				PRODUCT_NAME = "$(TARGET_NAME)";
 				SWIFT_VERSION = 5.0;
-				TARGETED_DEVICE_FAMILY = "1,2";
+				TARGETED_DEVICE_FAMILY = 1;
 			};
 			name = Release;
 		};

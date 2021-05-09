@@ -13,7 +13,7 @@ struct MNOnboardingViewSwiftUIView: View {
     var body: some View {
         VStack(alignment: .center, spacing: nil, content: {
             Spacer()
-            Image("news-app-icon").resizable().frame(width: 200, height: 200, alignment: .center).scaledToFit()
+            Image("news-app-icon").resizable().scaledToFit()
             Spacer()
             Text("Welcome").font(.system(size: 20, weight: .bold, design: .default)).foregroundColor(Color("title-text-color")).padding()
             Text("Thanks for installing our app and hopefully you will enjoy using it.").multilineTextAlignment(.center).font(.callout).foregroundColor(Color("subtitle-text-color"))

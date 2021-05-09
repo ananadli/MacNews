@@ -13,7 +13,7 @@ struct MacNewsApp: App {
     @AppStorage("isFirstOpen") var isFirstOpen : Bool = true
     var body: some Scene {
         WindowGroup {
-            MNArticlesSwiftUIView().sheet(isPresented: $isFirstOpen, content: {
+            MNArticlesSwiftUIView( ).sheet(isPresented: $isFirstOpen, content: {
                 MNOnboardingViewSwiftUIView(isFirstOpen: $isFirstOpen)
             })
             

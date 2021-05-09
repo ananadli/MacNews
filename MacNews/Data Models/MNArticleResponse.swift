@@ -28,21 +28,34 @@ struct MNArticleResponse : Codable {
     }
 }
 
-struct MNArticleModel : Codable,Identifiable,Hashable {
+struct MNArticleModel : Codable,Identifiable,Hashable,Equatable {
+    static func == (lhs: MNArticleModel, rhs: MNArticleModel) -> Bool {
+        lhs.idPath == rhs.idPath
+    }
+    
     
     let id = UUID()
+    var articleContent: MNArticleContentModel
     let idPath: String
     let title : String
     let pubDate : Date
     let category : String
     let thumbnail : String
-    
-    init(idPath : String,title : String , pubDate : Date , category:String,thumbnail:String) {
+    var hypertTextContent: String
+    var author : String
+    var context : String
+   
+  
+    init(idPath : String,title : String , pubDate : Date , category:String,thumbnail:String,hypertTextContent:String,author : String , articleContent : MNArticleContentModel) {
         self.idPath = idPath
         self.title = title
         self.pubDate = pubDate
         self.category = category
         self.thumbnail = thumbnail
+        self.articleContent = articleContent
+        self.hypertTextContent = "hypertTextContent"
+        self.author  = "author"
+        self.context = "context"
     }
     enum CodingKeys: String, CodingKey {
         case idPath = "@id"
@@ -50,6 +63,11 @@ struct MNArticleModel : Codable,Identifiable,Hashable {
         case pubDate
         case category
         case thumbnail
+        case articleContent
+        case author
+        case hypertTextContent = "content"
+        case context = "@context"
+
      }
     
     init(from decoder: Decoder) throws {
@@ -68,6 +86,24 @@ struct MNArticleModel : Codable,Identifiable,Hashable {
         
         self.category = try container.decode(String.self, forKey: .category)
         self.thumbnail = try container.decode(String.self, forKey: .thumbnail)
+        
+        
+        do {
+            self.author = try container.decode(String.self, forKey: .author)
+            self.hypertTextContent = try container.decode(String.self, forKey: .hypertTextContent)
+            self.context = try container.decode(String.self, forKey: .context)
+
+            self.articleContent = MNArticleContentModel(hypertTextContent: hypertTextContent, author: author, context: context)
+
+        } catch _ {
+            self.articleContent = MNArticleContentModel(hypertTextContent: "", author: "", context: "")
+            self.author = ""
+            self.hypertTextContent = ""
+            self.context = ""
+        }
+
+        
+
     }
     
     
@@ -76,6 +112,7 @@ struct MNArticleModel : Codable,Identifiable,Hashable {
         formatter.unitsStyle = .full
         return formatter.localizedString(for: self.pubDate, relativeTo: Date())
     }
+
     
 }
 

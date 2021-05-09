@@ -30,10 +30,17 @@ class MNArticleViewModel: ObservableObject {
                 case .finished:
                     break
                 }
+                DispatchQueue.main.async {
+
                 self.isLoading = false
 
+                }
             }) { (articalRespons) in
+                DispatchQueue.main.async {
+                    
+                
                 self.articles = articalRespons.articles
+                }
         }
         cancellables.insert(cancellable)
     }

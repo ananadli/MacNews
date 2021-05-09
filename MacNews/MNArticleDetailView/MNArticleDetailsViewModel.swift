@@ -10,9 +10,7 @@ import Combine
 
 class MNArticleDetailsViewModel: ObservableObject {
     
-    var article : MNArticleModel
-    @Published var articleContentModelResponse : MNArticleContentModelResponse?
-    @Published var isLoading : Bool = false
+    @Published var article : MNArticleModel
     var cancellables = Set<AnyCancellable>()
     
     
@@ -22,7 +20,7 @@ class MNArticleDetailsViewModel: ObservableObject {
     }
     
     func fetchArticleDetails() {
-      //  isLoading = true
+        
         let cancellable = MNMacNewsAPI.getArticleContent(article:article)
       
             
@@ -34,13 +32,16 @@ class MNArticleDetailsViewModel: ObservableObject {
                 case .finished:
                     break
                 }
-              //  self.isLoading = false
 
-            }) { (articalDetailsRespons) in
-                self.articleContentModelResponse = articalDetailsRespons
-        }
+            }) { (articalContentResponse) in
+                DispatchQueue.main.async {
+                    
+                
+                self.article.articleContent = articalContentResponse
+                }
+
+            }
         cancellables.insert(cancellable)
     }
-    
     
 }

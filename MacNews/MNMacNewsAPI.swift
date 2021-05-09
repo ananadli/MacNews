@@ -24,11 +24,9 @@ struct Agent {
                 let value = try decoder.decode(T.self, from: result.data)
                 return Response(value: value, response: result.response)
             }
-            .receive(on: DispatchQueue.main)
             .eraseToAnyPublisher()
     }
 }
-
 // API End-Point implementation
 enum MNMacNewsAPI {
     static let agent = Agent()
@@ -46,15 +44,19 @@ enum MNMacNewsAPI {
             .eraseToAnyPublisher()
     }
     // Get the content for a particular artical (**Mind The Cash Policy**)
-    static func getArticleContent(article : MNArticleModel) -> AnyPublisher<MNArticleContentModelResponse, Error> {
+    static func getArticleContent(article : MNArticleModel) -> AnyPublisher<MNArticleContentModel, Error> {
 
         var request = URLRequest(url: base.appendingPathComponent(article.idPath))
-        request.cachePolicy = .reloadRevalidatingCacheData // This cash policy is also utilized for offline reading and bookmarking articles.
+        request.cachePolicy = .returnCacheDataElseLoad  // This cash policy is also utilized for offline reading and bookmarking articles.
 
         return agent.run(request)
             .map(\.value)
             .eraseToAnyPublisher()
     }
     
+ 
+
+    
+   
     
 }
