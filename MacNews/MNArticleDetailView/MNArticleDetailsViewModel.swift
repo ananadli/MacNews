@@ -16,12 +16,12 @@ class MNArticleDetailsViewModel: ObservableObject {
     
     init(article : MNArticleModel) {
         self.article = article
-        
+        self.fetchArticleDetails()
     }
     
     func fetchArticleDetails() {
         
-        let cancellable = MNMacNewsAPI.getArticleContent(article:article)
+        let cancellable = MNMacNewsAPI.fetchArticleContentService(article:article)
       
             
         
@@ -37,7 +37,7 @@ class MNArticleDetailsViewModel: ObservableObject {
                 DispatchQueue.main.async {
                     
                 
-                self.article.articleContent = articalContentResponse
+                self.article = articalContentResponse
                 }
 
             }

@@ -11,11 +11,22 @@ struct MNArticlesSwiftUIView: View {
     @ObservedObject var viewModel = MNArticleViewModel()
     @AppStorage(UserDefaultsKeys.BookmarkedArticles.rawValue) var bookmarkList : [String] = []
     @State var showBookmarked : Bool = false
+    @EnvironmentObject var deepLinkManeger : MNDeepLinkManeger
     var body: some View {
       
             NavigationView {
                
             ZStack {
+                
+                if deepLinkManeger.openArticleRequest != nil {
+                NavigationLink(
+                    destination: MNArticleDetailsSwiftUIView(viewModel: MNArticleDetailsViewModel(article: MNArticleModel(idPath: (deepLinkManeger.openArticleRequest?.articlePathId)!))),
+                    isActive: $deepLinkManeger.shouldOpen,
+                    label: {
+                        
+                    })
+                }
+                
                 Color("background-color").ignoresSafeArea()
                
                  
@@ -23,7 +34,6 @@ struct MNArticlesSwiftUIView: View {
                     
                 
                     MNArticleListNavigationView(showBookmarked: $showBookmarked, viewModel: viewModel)
-                    
                     LazyVStack(alignment: .leading, spacing: 0, content: {
                                 ScrollView(.vertical, showsIndicators: true, content: {
                                     
@@ -44,9 +54,8 @@ struct MNArticlesSwiftUIView: View {
                     }).navigationBarTitle("Articles").onAppear(perform: {
                                 
 
-                        if viewModel.articles.count == 0 {
-                                viewModel.getAllArticles()
-                        }
+                       
+                        
                         })
                     Spacer()
 
@@ -63,7 +72,7 @@ struct MNArticlesSwiftUIView: View {
 
 struct MNArticlesSwiftUIView_Previews: PreviewProvider {
     static var previews: some View {
-        MNArticlesSwiftUIView( )
+        MNArticlesSwiftUIView( ).environmentObject(MNDeepLinkManeger())
     }
 }
 
@@ -122,17 +131,23 @@ struct MNArticleListNavigationView: View {
                 
                 Button(action: {
                     
-                    viewModel.getAllArticles()
+                    viewModel.fetchAllArticles()
                 }, label: {
                     ZStack{
                     if viewModel.isLoading{
                         ProgressView().foregroundColor(.black)
                     }else{
-                        Image(systemName: "arrow.clockwise") .foregroundColor(.black).font(.system(size: 25, weight: .medium, design: .default))
+                        Image(systemName: "arrow.clockwise") .foregroundColor(.black).font(.system(size: 20, weight: .medium, design: .default))
                         
                     }
                     }
                 })
+                
+                
+            }
+            HStack {
+                Text("Articles").font(.system(size: 30, weight: .bold, design: .default)).foregroundColor(.black).multilineTextAlignment(.leading)
+                Spacer()
                 Button(action: {
                     
                     showBookmarked.toggle()
@@ -142,12 +157,7 @@ struct MNArticleListNavigationView: View {
                         .foregroundColor(.black).font(.system(size: 25, weight: .medium, design: .default))
                     
                 })
-                
-                
-            }
-            HStack {
-                Text("Articles").font(.system(size: 30, weight: .bold, design: .default)).foregroundColor(.black).multilineTextAlignment(.leading)
-                Spacer()
+
             }
             
         }).padding(EdgeInsets(top: 20, leading: 10, bottom: 0, trailing: 10))

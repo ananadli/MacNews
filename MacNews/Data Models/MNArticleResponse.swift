@@ -35,7 +35,6 @@ struct MNArticleModel : Codable,Identifiable,Hashable,Equatable {
     
     
     let id = UUID()
-    var articleContent: MNArticleContentModel
     let idPath: String
     let title : String
     let pubDate : Date
@@ -45,17 +44,25 @@ struct MNArticleModel : Codable,Identifiable,Hashable,Equatable {
     var author : String
     var context : String
    
-  
-    init(idPath : String,title : String , pubDate : Date , category:String,thumbnail:String,hypertTextContent:String,author : String , articleContent : MNArticleContentModel) {
+    init(idPath : String) {
+        self.idPath = idPath
+        self.title = ""
+        self.pubDate = Date()
+        self.category = ""
+        self.thumbnail = ""
+        self.hypertTextContent = ""
+        self.author  = ""
+        self.context = ""
+    }
+    init(idPath : String,title : String , pubDate : Date , category:String,thumbnail:String,hypertTextContent:String,author : String) {
         self.idPath = idPath
         self.title = title
         self.pubDate = pubDate
         self.category = category
         self.thumbnail = thumbnail
-        self.articleContent = articleContent
-        self.hypertTextContent = "hypertTextContent"
-        self.author  = "author"
-        self.context = "context"
+        self.hypertTextContent = ""
+        self.author  = ""
+        self.context = ""
     }
     enum CodingKeys: String, CodingKey {
         case idPath = "@id"
@@ -63,7 +70,6 @@ struct MNArticleModel : Codable,Identifiable,Hashable,Equatable {
         case pubDate
         case category
         case thumbnail
-        case articleContent
         case author
         case hypertTextContent = "content"
         case context = "@context"
@@ -93,10 +99,8 @@ struct MNArticleModel : Codable,Identifiable,Hashable,Equatable {
             self.hypertTextContent = try container.decode(String.self, forKey: .hypertTextContent)
             self.context = try container.decode(String.self, forKey: .context)
 
-            self.articleContent = MNArticleContentModel(hypertTextContent: hypertTextContent, author: author, context: context)
 
         } catch _ {
-            self.articleContent = MNArticleContentModel(hypertTextContent: "", author: "", context: "")
             self.author = ""
             self.hypertTextContent = ""
             self.context = ""

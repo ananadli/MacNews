@@ -33,7 +33,7 @@ enum MNMacNewsAPI {
     static let base = URL(string: "https://public-macnews-sample.s3-eu-west-1.amazonaws.com")!
 
     //Get All articals at once
-    static func getAllArticles() -> AnyPublisher<MNArticleResponse, Error> {
+    static func fetchAllArrticalsService() -> AnyPublisher<MNArticleResponse, Error> {
 
         var request = URLRequest(url: base.appendingPathComponent("/articles.json"))
         request.cachePolicy = .reloadRevalidatingCacheData
@@ -43,8 +43,9 @@ enum MNMacNewsAPI {
             .map(\.value)
             .eraseToAnyPublisher()
     }
-    // Get the content for a particular artical (**Mind The Cash Policy**)
-    static func getArticleContent(article : MNArticleModel) -> AnyPublisher<MNArticleContentModel, Error> {
+ 
+    
+    static func fetchArticleContentService(article : MNArticleModel) -> AnyPublisher<MNArticleModel, Error> {
 
         var request = URLRequest(url: base.appendingPathComponent(article.idPath))
         request.cachePolicy = .returnCacheDataElseLoad  // This cash policy is also utilized for offline reading and bookmarking articles.
@@ -53,8 +54,6 @@ enum MNMacNewsAPI {
             .map(\.value)
             .eraseToAnyPublisher()
     }
-    
- 
 
     
    

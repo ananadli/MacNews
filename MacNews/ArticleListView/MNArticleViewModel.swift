@@ -16,10 +16,13 @@ class MNArticleViewModel: ObservableObject {
     @Published var isLoading : Bool = false
         var cancellables = Set<AnyCancellable>()
         
-   
-    func getAllArticles(){
+    init() {
+        self.fetchAllArticles()
+
+    }
+    func fetchAllArticles(){
         isLoading = true
-        let cancellable = MNMacNewsAPI.getAllArticles()
+        let cancellable = MNMacNewsAPI.fetchAllArrticalsService()
       
             
         

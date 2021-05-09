@@ -17,6 +17,7 @@ struct MNArticleDetailsSwiftUIView: View {
             VStack(alignment: .center, spacing: nil, content: {
                 
                 MNArticalDetailsHeaderView(viewModel: viewModel).padding()
+                
                 ScrollView(.vertical, showsIndicators: true, content: {
 
                     HStack {
@@ -28,7 +29,7 @@ struct MNArticleDetailsSwiftUIView: View {
                     HStack(alignment: .center, spacing: nil, content: {
 
                     VStack(alignment: .leading, spacing: 5, content: {
-                        Text(viewModel.article.articleContent.author ).foregroundColor(Color("subtitle-color")).font(.system(size: 15, weight: .semibold, design: .default))
+                        Text(viewModel.article.author ).foregroundColor(Color("subtitle-color" )).font(.system(size: 15, weight: .semibold, design: .default))
                             Text(viewModel.article.getRelativePubDateFormat()).foregroundColor(.gray).font(.system(size: 13, weight: .medium, design: .default))
                         })
                         Spacer()
@@ -54,20 +55,23 @@ struct MNArticleDetailsSwiftUIView: View {
                     
             
                 WebImage(url: URL(string: viewModel.article.thumbnail)).resizable().scaledToFill().frame(height: 200, alignment: .center).background(Color(.lightGray)).clipped()
-                    MNArticleHTMLContentView(articleHTMLBody:viewModel.article.articleContent.hypertTextContent).frame( height: 20000, alignment: .center)
+                    MNArticleHTMLContentView(articleHTMLBody:viewModel.article.hypertTextContent).frame( height: 20000, alignment: .center)
                })
 
             }).ignoresSafeArea(edges: .bottom).onAppear(perform: {
                 
-                viewModel.fetchArticleDetails()
+               // viewModel.fetchArticleDetails()
+                
         }).navigationBarHidden(true)
-        }
+        }.onDisappear(
+        
+        )
     }
 }
 
 struct MNArticleDetailsSwiftUIView_Previews: PreviewProvider {
     static var previews: some View {
-        MNArticleDetailsSwiftUIView(viewModel: MNArticleDetailsViewModel(article: MNArticleModel(idPath: "/articles/1.json", title: "Windows 10 Gaining Improved Audio Support for AirPods in Future Update", pubDate: Date(), category: "AirPods", thumbnail: "https://images.macrumors.com/article-new/2020/11/windows-10.jpg", isBookMarked: false,hypertTextContent: "",author: "", articleContent: MNArticleContentModel(hypertTextContent: "", author: "", context: ""))))
+        MNArticleDetailsSwiftUIView(viewModel: MNArticleDetailsViewModel(article: MNArticleModel(idPath: "/articles/1.json", title: "Windows 10 Gaining Improved Audio Support for AirPods in Future Update", pubDate: Date(), category: "AirPods", thumbnail: "https://images.macrumors.com/article-new/2020/11/windows-10.jpg",hypertTextContent: "",author: "")))
     }
 }
 
