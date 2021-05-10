@@ -15,7 +15,7 @@ struct MNOnboardingViewSwiftUIView: View {
             Spacer()
             Image("news-app-icon").resizable().scaledToFit()
             Spacer()
-            Text("Welcome").font(.system(size: 20, weight: .bold, design: .default)).foregroundColor(Color("title-text-color")).padding()
+            Text("Welcome").font(.system(size: 30, weight: .bold, design: .default)).foregroundColor(Color("title-text-color")).padding()
             Text("Thanks for installing our app and hopefully you will enjoy using it.").multilineTextAlignment(.center).font(.callout).foregroundColor(Color("subtitle-text-color"))
             
             Spacer()

@@ -10,14 +10,15 @@ import SDWebImageSwiftUI
 struct MNArticlesSwiftUIView: View {
     @ObservedObject var viewModel = MNArticleViewModel()
     @AppStorage(UserDefaultsKeys.BookmarkedArticles.rawValue) var bookmarkList : [String] = []
-    @State var showBookmarked : Bool = false
+    @State var  bookmarkFilter : Int = 1
+    
     @EnvironmentObject var deepLinkManeger : MNDeepLinkManeger
     var body: some View {
       
             NavigationView {
                
             ZStack {
-                
+                //** Handle opening the artical from external URL NOTE the $deepLinkManeger.shouldOpen blinding it must be handled by automatically (False case) the navigation
                 if deepLinkManeger.openArticleRequest != nil {
                 NavigationLink(
                     destination: MNArticleDetailsSwiftUIView(viewModel: MNArticleDetailsViewModel(article: MNArticleModel(idPath: (deepLinkManeger.openArticleRequest?.articlePathId)!))),
@@ -25,43 +26,46 @@ struct MNArticlesSwiftUIView: View {
                     label: {
                         
                     })
-                }
+                }//**
                 
+                //Changing Background Color
                 Color("background-color").ignoresSafeArea()
                
                  
                 VStack(alignment: .center, spacing: 0, content: {
                     
-                
-                    MNArticleListNavigationView(showBookmarked: $showBookmarked, viewModel: viewModel)
+                //Placing a custom navigation view
+                    MNArticleListNavigationView(bookmarkFilter: $bookmarkFilter, viewModel: viewModel)
+                    
+                    ScrollView(.vertical, showsIndicators: true, content: {
+
                     LazyVStack(alignment: .leading, spacing: 0, content: {
-                                ScrollView(.vertical, showsIndicators: true, content: {
                                     
                             
                                     ForEach(viewModel.articles, id: \.id) { item in
-                                        if showBookmarked == true   {
+                                        //Check if bookmark filter is selected
+                                        if bookmarkFilter == 2   {
+                                            //check if the article is bookmarked
                                             if bookmarkList.contains(item.idPath) {
-                                                
+                                                //Article is Bookmarked
                                     MNArticleListItemView(article: item)
                                             }
                                         }else{
+                                            //Display all artical
                                             MNArticleListItemView(article: item)
                                         }
                                 }
 
                             })
 
-                    }).navigationBarTitle("Articles").onAppear(perform: {
-                                
-
-                       
-                        
-                        })
+                    })
                     Spacer()
 
                 })
-                
-            }.navigationBarHidden(true)
+              //This alert to display errors and the $viewModel.isError binding it must be handled by the alert (False Case)
+            }.alert(isPresented: $viewModel.isError, content: {
+                Alert(title: Text("Error"), message: Text(viewModel.error?.localizedDescription ?? "Error Accrued"), dismissButton: .default(Text("Ok")))
+            }).ignoresSafeArea(.all, edges: .bottom).navigationBarHidden(true)
                 
             }
         
@@ -120,13 +124,18 @@ struct MNArticleRelativeDateView: View {
 }
 
 struct MNArticleListNavigationView: View {
-    @Binding var showBookmarked : Bool
+    @Binding var bookmarkFilter : Int
     @ObservedObject var viewModel : MNArticleViewModel
-
+    @State var showAboutView : Bool = false
+    
     var body: some View {
         VStack(alignment: .center, spacing: nil, content: {
             HStack {
-                
+                Button(action: {
+                    showAboutView.toggle()
+                }, label: {
+                    Image(systemName: "info.circle").foregroundColor(.black).font(.system(size: 25, weight: .medium, design: .default))
+                })
                 Spacer()
                 
                 Button(action: {
@@ -137,7 +146,7 @@ struct MNArticleListNavigationView: View {
                     if viewModel.isLoading{
                         ProgressView().foregroundColor(.black)
                     }else{
-                        Image(systemName: "arrow.clockwise") .foregroundColor(.black).font(.system(size: 20, weight: .medium, design: .default))
+                        Image(systemName: "arrow.clockwise") .foregroundColor(.black).font(.system(size: 25, weight: .medium, design: .default))
                         
                     }
                     }
@@ -148,18 +157,16 @@ struct MNArticleListNavigationView: View {
             HStack {
                 Text("Articles").font(.system(size: 30, weight: .bold, design: .default)).foregroundColor(.black).multilineTextAlignment(.leading)
                 Spacer()
-                Button(action: {
-                    
-                    showBookmarked.toggle()
-                }, label: {
-                    
-                    Image(systemName: showBookmarked ? "bookmark.circle.fill" : "bookmark.circle")
-                        .foregroundColor(.black).font(.system(size: 25, weight: .medium, design: .default))
-                    
-                })
+             
 
             }
             
-        }).padding(EdgeInsets(top: 20, leading: 10, bottom: 0, trailing: 10))
+            Picker(selection: $bookmarkFilter, label: Text("Picker"), content: {
+                Text("All").tag(1)
+                Text("Bookmarked").tag(2)
+            }).pickerStyle(SegmentedPickerStyle()).accentColor(.black)
+        }).sheet(isPresented: $showAboutView, content: {
+            MNAboutSwiftUIView(showAboutView: $showAboutView)
+        }).padding(EdgeInsets(top: 10, leading: 10, bottom: 0, trailing: 10))
     }
 }

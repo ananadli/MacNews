@@ -13,7 +13,9 @@ struct MNArticleDetailsSwiftUIView: View {
     
     var body: some View {
         ZStack {
+            //Changing Background Color
             Color("background-color").ignoresSafeArea()
+            
             VStack(alignment: .center, spacing: nil, content: {
                 
                 MNArticalDetailsHeaderView(viewModel: viewModel).padding()
@@ -34,18 +36,20 @@ struct MNArticleDetailsSwiftUIView: View {
                         })
                         Spacer()
                         Button(action: {
-                            //viewModel.toggleArticleInBookmarkList()
+                            //This logic is to bookmark and un-bookmark an artical via savin the id in a @AppStorage array of strings
                             if bookmarkList.contains(viewModel.article.idPath) {
+                                //Remove from bookmark list
                                 if let index = bookmarkList.firstIndex(of: viewModel.article.idPath){
                                     bookmarkList.remove(at: index)
                                 }
                                 
                             }else{
+                                //Add to bookmark list
                                 bookmarkList.append(viewModel.article.idPath)
 
                             }
                         }, label: {
-                                
+                                //the image name changes if the artical id is in the @AppStorege array
                             Image(systemName: bookmarkList.contains(viewModel.article.idPath) ? "bookmark.fill" : "bookmark").foregroundColor(Color("subtitle-color")).font(.system(size: 20, weight: .semibold, design: .default))
                             
                             
@@ -58,20 +62,18 @@ struct MNArticleDetailsSwiftUIView: View {
                     MNArticleHTMLContentView(articleHTMLBody:viewModel.article.hypertTextContent).frame( height: 20000, alignment: .center)
                })
 
-            }).ignoresSafeArea(edges: .bottom).onAppear(perform: {
-                
-               // viewModel.fetchArticleDetails()
-                
-        }).navigationBarHidden(true)
-        }.onDisappear(
-        
-        )
+            }).ignoresSafeArea(edges: .bottom).navigationBarHidden(true)
+            
+            //This alert to display errors and the $viewModel.isError binding it must be handled by the alert (False Case)
+        }.alert(isPresented: $viewModel.isError, content: {
+            Alert(title: Text("Error"), message: Text(viewModel.error?.localizedDescription ?? "Error Accrued"), dismissButton: .default(Text("Ok")))
+        })
     }
 }
 
 struct MNArticleDetailsSwiftUIView_Previews: PreviewProvider {
     static var previews: some View {
-        MNArticleDetailsSwiftUIView(viewModel: MNArticleDetailsViewModel(article: MNArticleModel(idPath: "/articles/1.json", title: "Windows 10 Gaining Improved Audio Support for AirPods in Future Update", pubDate: Date(), category: "AirPods", thumbnail: "https://images.macrumors.com/article-new/2020/11/windows-10.jpg",hypertTextContent: "",author: "")))
+        MNArticleDetailsSwiftUIView(viewModel: MNArticleDetailsViewModel(article: MNArticleModel(idPath: "/articles/1.json", title: "Windows 10 Gaining Improved Audio Support for AirPods in Future Update", pubDate: Date(), category: "AirPods", thumbnail: "https://images.macrumors.com/article-new/2020/11/windows-10.jpg",hypertTextContent: "HTML",author: "Anan Suliman")))
     }
 }
 

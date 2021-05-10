@@ -27,6 +27,8 @@ extension Array: RawRepresentable where Element: Codable {
         return result
     }
 }
+//Predefine the Userdefultsand AppStorege keys
 enum UserDefaultsKeys :String {
     case BookmarkedArticles
+    case FirstOpen
 }

@@ -10,7 +10,7 @@ import SwiftUI
 
 @main
 struct MacNewsApp: App {
-    @AppStorage("isFirstOpen") var isFirstOpen : Bool = true
+    @AppStorage(UserDefaultsKeys.FirstOpen.rawValue) var isFirstOpen : Bool = true
     @ObservedObject var deepLinkManeger  = MNDeepLinkManeger()
 
     var body: some Scene {
@@ -18,9 +18,9 @@ struct MacNewsApp: App {
             MNArticlesSwiftUIView().environmentObject(deepLinkManeger).sheet(isPresented: $isFirstOpen, content: {
                 MNOnboardingViewSwiftUIView(isFirstOpen: $isFirstOpen)
             }).onOpenURL(perform: { url in
-                print(url.path)
+                //Passing the URL to the deeplink manager
                 deepLinkManeger.openArticleRequest = MNOpenArticleRequest(url: url, articlePathId: url.path)
-                deepLinkManeger.shouldOpen = true
+                deepLinkManeger.shouldOpen = true 
                 
             })
             

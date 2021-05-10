@@ -9,6 +9,10 @@
 /* Begin PBXBuildFile section */
 		94C4A5BF2647DAF1005C026F /* MNGlobalExtiontions.swift in Sources */ = {isa = PBXBuildFile; fileRef = 94C4A5BE2647DAF1005C026F /* MNGlobalExtiontions.swift */; };
 		94C4A5C12647E323005C026F /* MNDeepLinkManeger.swift in Sources */ = {isa = PBXBuildFile; fileRef = 94C4A5C02647E323005C026F /* MNDeepLinkManeger.swift */; };
+		94C4A5C9264854F9005C026F /* MNAboutSwiftUIView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 94C4A5C8264854F9005C026F /* MNAboutSwiftUIView.swift */; };
+		94C4A5CB26486903005C026F /* about.md in Resources */ = {isa = PBXBuildFile; fileRef = 94C4A5CA26486903005C026F /* about.md */; };
+		94C4A5CE26486DF0005C026F /* Down in Frameworks */ = {isa = PBXBuildFile; productRef = 94C4A5CD26486DF0005C026F /* Down */; };
+		94C4A5D0264871D3005C026F /* MNMarkdownView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 94C4A5CF264871D3005C026F /* MNMarkdownView.swift */; };
 		94FA47CB263CB19A0090F861 /* MacNewsApp.swift in Sources */ = {isa = PBXBuildFile; fileRef = 94FA47CA263CB19A0090F861 /* MacNewsApp.swift */; };
 		94FA47CF263CB19B0090F861 /* Assets.xcassets in Resources */ = {isa = PBXBuildFile; fileRef = 94FA47CE263CB19B0090F861 /* Assets.xcassets */; };
 		94FA47D2263CB19B0090F861 /* Preview Assets.xcassets in Resources */ = {isa = PBXBuildFile; fileRef = 94FA47D1263CB19B0090F861 /* Preview Assets.xcassets */; };
@@ -46,6 +50,9 @@
 /* Begin PBXFileReference section */
 		94C4A5BE2647DAF1005C026F /* MNGlobalExtiontions.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = MNGlobalExtiontions.swift; sourceTree = "<group>"; };
 		94C4A5C02647E323005C026F /* MNDeepLinkManeger.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = MNDeepLinkManeger.swift; sourceTree = "<group>"; };
+		94C4A5C8264854F9005C026F /* MNAboutSwiftUIView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = MNAboutSwiftUIView.swift; sourceTree = "<group>"; };
+		94C4A5CA26486903005C026F /* about.md */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = net.daringfireball.markdown; path = about.md; sourceTree = "<group>"; };
+		94C4A5CF264871D3005C026F /* MNMarkdownView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = MNMarkdownView.swift; sourceTree = "<group>"; };
 		94FA47C7263CB19A0090F861 /* MacNews.app */ = {isa = PBXFileReference; explicitFileType = wrapper.application; includeInIndex = 0; path = MacNews.app; sourceTree = BUILT_PRODUCTS_DIR; };
 		94FA47CA263CB19A0090F861 /* MacNewsApp.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = MacNewsApp.swift; sourceTree = "<group>"; };
 		94FA47CE263CB19B0090F861 /* Assets.xcassets */ = {isa = PBXFileReference; lastKnownFileType = folder.assetcatalog; path = Assets.xcassets; sourceTree = "<group>"; };
@@ -73,6 +80,7 @@
 			isa = PBXFrameworksBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
+				94C4A5CE26486DF0005C026F /* Down in Frameworks */,
 				94FA480E26433D9A0090F861 /* SDWebImageSwiftUI in Frameworks */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
@@ -94,6 +102,41 @@
 /* End PBXFrameworksBuildPhase section */
 
 /* Begin PBXGroup section */
+		94C4A5D126488D7A005C026F /* MNAboutView */ = {
+			isa = PBXGroup;
+			children = (
+				94C4A5C8264854F9005C026F /* MNAboutSwiftUIView.swift */,
+				94C4A5CA26486903005C026F /* about.md */,
+				94C4A5CF264871D3005C026F /* MNMarkdownView.swift */,
+			);
+			path = MNAboutView;
+			sourceTree = "<group>";
+		};
+		94C4A5D22648A76D005C026F /* MNAPI */ = {
+			isa = PBXGroup;
+			children = (
+				94FA4806264091F20090F861 /* MNMacNewsAPI.swift */,
+			);
+			path = MNAPI;
+			sourceTree = "<group>";
+		};
+		94C4A5D32648A781005C026F /* Global */ = {
+			isa = PBXGroup;
+			children = (
+				94C4A5BE2647DAF1005C026F /* MNGlobalExtiontions.swift */,
+				94C4A5C02647E323005C026F /* MNDeepLinkManeger.swift */,
+			);
+			path = Global;
+			sourceTree = "<group>";
+		};
+		94C4A5D42648A7D0005C026F /* MNOnboardingView */ = {
+			isa = PBXGroup;
+			children = (
+				94FA480826415C700090F861 /* MNOnboardingViewSwiftUIView.swift */,
+			);
+			path = MNOnboardingView;
+			sourceTree = "<group>";
+		};
 		94FA47BE263CB19A0090F861 = {
 			isa = PBXGroup;
 			children = (
@@ -118,17 +161,17 @@
 			isa = PBXGroup;
 			children = (
 				94FA47CA263CB19A0090F861 /* MacNewsApp.swift */,
-				94FA480826415C700090F861 /* MNOnboardingViewSwiftUIView.swift */,
+				94C4A5D42648A7D0005C026F /* MNOnboardingView */,
 				94FA480A264160010090F861 /* ArticleListView */,
 				94FA481326435E8F0090F861 /* MNArticleDetailView */,
+				94C4A5D126488D7A005C026F /* MNAboutView */,
 				94FA480B264160810090F861 /* Data Models */,
-				94FA47CE263CB19B0090F861 /* Assets.xcassets */,
+				94C4A5D22648A76D005C026F /* MNAPI */,
+				94C4A5D32648A781005C026F /* Global */,
 				94FA47D3263CB19B0090F861 /* Info.plist */,
 				94FA47D0263CB19B0090F861 /* Preview Content */,
+				94FA47CE263CB19B0090F861 /* Assets.xcassets */,
 				94FA47F7263CB5D30090F861 /* Colors.xcassets */,
-				94FA4806264091F20090F861 /* MNMacNewsAPI.swift */,
-				94C4A5BE2647DAF1005C026F /* MNGlobalExtiontions.swift */,
-				94C4A5C02647E323005C026F /* MNDeepLinkManeger.swift */,
 			);
 			path = MacNews;
 			sourceTree = "<group>";
@@ -204,6 +247,7 @@
 			name = MacNews;
 			packageProductDependencies = (
 				94FA480D26433D9A0090F861 /* SDWebImageSwiftUI */,
+				94C4A5CD26486DF0005C026F /* Down */,
 			);
 			productName = MacNews;
 			productReference = 94FA47C7263CB19A0090F861 /* MacNews.app */;
@@ -278,6 +322,7 @@
 			mainGroup = 94FA47BE263CB19A0090F861;
 			packageReferences = (
 				94FA480C26433D9A0090F861 /* XCRemoteSwiftPackageReference "SDWebImageSwiftUI" */,
+				94C4A5CC26486DF0005C026F /* XCRemoteSwiftPackageReference "Down" */,
 			);
 			productRefGroup = 94FA47C8263CB19A0090F861 /* Products */;
 			projectDirPath = "";
@@ -297,6 +342,7 @@
 			files = (
 				94FA47F8263CB5D30090F861 /* Colors.xcassets in Resources */,
 				94FA47D2263CB19B0090F861 /* Preview Assets.xcassets in Resources */,
+				94C4A5CB26486903005C026F /* about.md in Resources */,
 				94FA47CF263CB19B0090F861 /* Assets.xcassets in Resources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
@@ -333,6 +379,8 @@
 				94FA47FC263E6C540090F861 /* MNArticleResponse.swift in Sources */,
 				94FA4807264091F20090F861 /* MNMacNewsAPI.swift in Sources */,
 				94FA481226435E890090F861 /* MNArticleDetailsViewModel.swift in Sources */,
+				94C4A5D0264871D3005C026F /* MNMarkdownView.swift in Sources */,
+				94C4A5C9264854F9005C026F /* MNAboutSwiftUIView.swift in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
@@ -654,6 +702,14 @@
 /* End XCConfigurationList section */
 
 /* Begin XCRemoteSwiftPackageReference section */
+		94C4A5CC26486DF0005C026F /* XCRemoteSwiftPackageReference "Down" */ = {
+			isa = XCRemoteSwiftPackageReference;
+			repositoryURL = "https://github.com/johnxnguyen/Down.git";
+			requirement = {
+				kind = upToNextMajorVersion;
+				minimumVersion = 0.11.0;
+			};
+		};
 		94FA480C26433D9A0090F861 /* XCRemoteSwiftPackageReference "SDWebImageSwiftUI" */ = {
 			isa = XCRemoteSwiftPackageReference;
 			repositoryURL = "https://github.com/SDWebImage/SDWebImageSwiftUI.git";
@@ -665,6 +721,11 @@
 /* End XCRemoteSwiftPackageReference section */
 
 /* Begin XCSwiftPackageProductDependency section */
+		94C4A5CD26486DF0005C026F /* Down */ = {
+			isa = XCSwiftPackageProductDependency;
+			package = 94C4A5CC26486DF0005C026F /* XCRemoteSwiftPackageReference "Down" */;
+			productName = Down;
+		};
 		94FA480D26433D9A0090F861 /* SDWebImageSwiftUI */ = {
 			isa = XCSwiftPackageProductDependency;
 			package = 94FA480C26433D9A0090F861 /* XCRemoteSwiftPackageReference "SDWebImageSwiftUI" */;

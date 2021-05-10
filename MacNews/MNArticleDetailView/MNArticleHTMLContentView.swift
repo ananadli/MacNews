@@ -23,18 +23,19 @@ struct MNArticleHTMLContentView : UIViewRepresentable {
         controller.addUserScript(viewportScript)
               
 
-              //Initialize a configuration and set controller
-               let config = WKWebViewConfiguration()
-               config.userContentController = controller
+        //Initialize a configuration and set controller
+        let config = WKWebViewConfiguration()
+        config.userContentController = controller
         
-        let nativeWebView =  WKWebView(frame: CGRect(x: 0, y: 0, width: 0, height: 20000), configuration: config)
-                nativeWebView.scrollView.isScrollEnabled = false               // Make sure our view is interactable
-                nativeWebView.allowsBackForwardNavigationGestures = false   // Disable swiping to navigate
-                nativeWebView.contentMode = .scaleAspectFill                    // Scale the page to fill the web view
-        nativeWebView.scrollView.subviews.forEach { $0.isUserInteractionEnabled = false }
+        let webView =  WKWebView(frame: CGRect(x: 0, y: 0, width: 0, height: 20000), configuration: config)
+        webView.scrollView.isScrollEnabled = false               // Make sure our view is interactable
+        webView.allowsBackForwardNavigationGestures = false   // Disable swiping to navigate
+        webView.contentMode = .scaleAspectFill                    // Scale the page to fill the web view
+        webView.scrollView.subviews.forEach { $0.isUserInteractionEnabled = false }
+        webView.backgroundColor = UIColor.clear
 
         
-        return nativeWebView
+        return webView
     }
 
     func updateUIView(_ webView: WKWebView, context: Context) {

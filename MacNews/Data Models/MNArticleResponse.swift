@@ -16,6 +16,7 @@ struct MNArticleResponse : Codable {
     
     
     enum CodingKeys: String, CodingKey {
+        //Key name change for compatibility reasons
        case articles = "hydra:member"
      }
     
@@ -29,6 +30,7 @@ struct MNArticleResponse : Codable {
 }
 
 struct MNArticleModel : Codable,Identifiable,Hashable,Equatable {
+    // Comparison based on articleIdPath
     static func == (lhs: MNArticleModel, rhs: MNArticleModel) -> Bool {
         lhs.idPath == rhs.idPath
     }
@@ -65,6 +67,7 @@ struct MNArticleModel : Codable,Identifiable,Hashable,Equatable {
         self.context = ""
     }
     enum CodingKeys: String, CodingKey {
+        //Key name change for compatibility reasons
         case idPath = "@id"
         case title
         case pubDate
@@ -83,7 +86,7 @@ struct MNArticleModel : Codable,Identifiable,Hashable,Equatable {
         self.idPath = try container.decode(String.self, forKey: .idPath)
         self.title = try container.decode(String.self, forKey: .title)
        
-
+//Convert String date ime to Date object
         let pudStringDate = try container.decode(String.self, forKey: .pubDate)
         let dateFormatter = DateFormatter()
         dateFormatter.dateFormat = "yyyy-MM-dd' 'HH:mm:ss"

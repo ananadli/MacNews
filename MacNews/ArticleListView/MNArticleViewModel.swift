@@ -15,7 +15,8 @@ class MNArticleViewModel: ObservableObject {
     @Published var articles = [MNArticleModel]()
     @Published var isLoading : Bool = false
         var cancellables = Set<AnyCancellable>()
-        
+    @Published var error : Error?
+    @Published var isError : Bool = false
     init() {
         self.fetchAllArticles()
 
@@ -30,6 +31,11 @@ class MNArticleViewModel: ObservableObject {
                 switch result {
                 case .failure(let error):
                     print("Handle error: \(error)")
+                    DispatchQueue.main.async {
+
+                    self.error =  error
+                        self.isError = true
+                    }
                 case .finished:
                     break
                 }

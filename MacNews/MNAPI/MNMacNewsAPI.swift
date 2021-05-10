@@ -36,7 +36,7 @@ enum MNMacNewsAPI {
     static func fetchAllArrticalsService() -> AnyPublisher<MNArticleResponse, Error> {
 
         var request = URLRequest(url: base.appendingPathComponent("/articles.json"))
-        request.cachePolicy = .reloadRevalidatingCacheData
+        request.cachePolicy = .returnCacheDataElseLoad
 
       
         return agent.run(request)

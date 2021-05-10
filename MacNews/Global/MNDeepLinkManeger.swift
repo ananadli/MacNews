@@ -11,7 +11,7 @@ import Foundation
 class MNDeepLinkManeger: ObservableObject {
     
    @Published var openArticleRequest : MNOpenArticleRequest?
-   @Published var shouldOpen : Bool = false
+   @Published var shouldOpen : Bool = false //Value must be set false only by the navigation
 
     
 }
